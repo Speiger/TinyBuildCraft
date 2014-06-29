@@ -1,18 +1,19 @@
 package speiger.src.tinyBuildcraft;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 import buildcraft.api.power.PowerHandler.Type;
 import buildcraft.transport.Pipe;
-import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportPower;
+import buildcraft.transport.TileGenericPipe;
+import buildcraft.transport.pipes.PipePowerWood;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class AdvancedWoodenPipe extends Pipe<PipeTransportPower> implements IPowerReceptor
@@ -38,6 +39,28 @@ public class AdvancedWoodenPipe extends Pipe<PipeTransportPower> implements IPow
 	@SideOnly(Side.CLIENT)
 	public IIconProvider getIconProvider() {
 		return IconProvider.getIcon();
+	}
+	
+	
+
+	@Override
+	public boolean canPipeConnect(TileEntity tile, ForgeDirection side)
+	{
+		if(tile instanceof TileGenericPipe)
+		{
+			Pipe otherPipe = ((TileGenericPipe) tile).pipe;
+			if(otherPipe instanceof AdvancedWoodenPipe || otherPipe instanceof PipePowerWood)
+			{
+				return false;
+			}
+			return true;
+		}
+		else if(tile instanceof IPowerReceptor)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override

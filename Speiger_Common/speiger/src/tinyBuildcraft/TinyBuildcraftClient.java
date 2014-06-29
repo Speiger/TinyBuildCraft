@@ -10,5 +10,6 @@ public class TinyBuildcraftClient extends TinyBuildcraftCore
 	public void render()
 	{
 		MinecraftForgeClient.registerItemRenderer(TinyBuildcraftAddon.advWoodenPipe.itemID, TransportProxyClient.pipeItemRenderer);
+		MinecraftForgeClient.registerItemRenderer(TinyBuildcraftAddon.ironPowerPipe.itemID, TransportProxyClient.pipeItemRenderer);
 	}
 }
